@@ -15,6 +15,8 @@ vim.cmd([[
   set softtabstop=2           " see multiple spaces as tabstops so <BS> does the right thing
   set shiftwidth=2            " width for autoindents
   set cc=120                  " set an 80 column border for good coding style
+
+  tnoremap <Esc><Esc> <C-\><C-n>
 ]])
 
 vim.api.nvim_create_autocmd("BufWrite", {
