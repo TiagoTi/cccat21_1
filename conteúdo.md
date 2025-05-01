@@ -16,3 +16,10 @@ CQRS
 Desgn Patterns
 
 SOLID
+
+---
+
+Resultado esperado:
+
+Desenvolver um olhar mais crítico e profissional em relação ao desenvolvimento de software
+elevendo o nivel de maturidade
