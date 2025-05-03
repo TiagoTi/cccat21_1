@@ -22,7 +22,7 @@ vim.cmd([[
 
 vim.api.nvim_create_autocmd("BufWrite", {
   pattern = {"*.ts","*.tsx"},
-  command = [[!yarn jest --coverage --passWithNoTests]],
+  command = [[!yarn jest --testTimeout=500 --retryTimes=1 --coverage --passWithNoTests]],
 })
 vim.api.nvim_create_autocmd({'BufEnter', 'BufWinEnter'}, {
   pattern = {'*.c', '*.h'},
