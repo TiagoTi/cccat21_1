@@ -1,5 +1,7 @@
 export function validateCpf2(str: string): boolean {
-  if (str !== null) {
+  if (str === null) {
+    return false;
+  }
 		if (str !== undefined) {
 			if (str.length >= 11 && str.length <=14) {
 				// cleaning cpf
@@ -42,6 +44,5 @@ export function validateCpf2(str: string): boolean {
 
 			}else return false;
 		} else return false;
-	}else return false;
   return false;
 }
