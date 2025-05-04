@@ -9,13 +9,17 @@ const database = {};
 
 route.post('/signup', async (request: Request, response: Response)=>{
   const accountId = crypto.randomUUID();
+  const account = request.body
+  account[accountId] = accountId
+  database[accountId] = account
   response.status(201).json({"accountId": accountId})
 }
 );
 route.get('/accounts/:accountId', async (request: Request, response: Response)=>{
   const accountId = request.params.accountId;
-  //database.hasOwnProtperty(accountId);
-  response.status(200).json({"accountId": accountId})
+  if( database.hasOwnProperty.call(database, accountId)){
+    response.status(200).json(database[accountId])
+  }
 }
 );
 
