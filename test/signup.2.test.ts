@@ -2,23 +2,26 @@ import axios from "axios";
 
 const server = "http://localhost:3000";
 
-test.only('deve criar uma conta', async () => {
+test('deve criar uma conta', async () => {
   // given
   const inputSignup = {
-    "name": "tester",
+    "name": "Tester user",
     "email": "tester@email.com",
-    "document": "22747148866",
-    "pasword": "P@ssw0rd"
+    "document": "97456321558",
+    "password": "Paww0rdsw"
   }
   // then
-  const responseSignUp =  await axios.post(`${server}/signup`);
-  expect(responseSignUp.data).toHaveProperty("accountId");
-  const accountId = responseSignUp.data.accountId;
-  const responseAccountResponse = await axios.get(`${server}/accounts/${accountId}`)
+  const resSignup = await axios.post(`${server}/signup`, inputSignup);
+  expect(resSignup.data).toHaveProperty("accountId");
 
+  const resAccount = await axios.get(`${server}/accounts/${resSignup.data.accountId}`)
+  expect(resAccount.data).toHaveProperty("accountId");
   // when
-  expect(responseSignUp.status).toBe(201);
-  expect(responseAccountResponse.status).toBe(200);
-  expect(typeof accountId).toBe("string");
-
+  expect(resSignup.status).toBe(201);
+  expect(resAccount.status).toBe(200);
+  expect(resAccount.data.name).toBe(inputSignup.name)
+  expect(resAccount.data.email).toBe(inputSignup.email)
+  expect(resAccount.data.document).toBe(inputSignup.document)
+  // TODO - crie uma forma de não retornar email e crie a expectativa para essa propiedade
+  // não deve existir a propriedade password no get account
 });

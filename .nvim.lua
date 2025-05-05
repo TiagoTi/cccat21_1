@@ -20,17 +20,39 @@ vim.cmd([[
   tnoremap <Esc><Esc> <C-\><C-n>
 ]])
 
-vim.api.nvim_create_autocmd("BufWrite", {
-  pattern = {"*.ts","*.tsx"},
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "src/*.ts",
   command = [[!yarn jest --testTimeout=500 --retryTimes=1 --coverage --passWithNoTests]],
+})
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "test/*.ts",
+  callback= function()
+    local file = vim.fn.expand("%")
+    vim.cmd(string.format(
+      "!yarn jest --testTimeout=500 --retryTimes=1 --coverage --passWithNoTests %s", file
+    ))
+  end,
 })
 vim.api.nvim_create_autocmd({'BufEnter', 'BufWinEnter'}, {
   pattern = {'*.c', '*.h'},
   command = "echo 'Entering a C or C++ file'"
 })
+
+-- create autocommand to reload config on save local neoivm config
+vim.api.nvim_create_autocmd('BufWritePost', {
+  pattern = ".nvim.lua",
+  callback = function()
+    vim.cmd("silent! source .nvim.lua")
+    print('new config reloaded!')
+  end
+})
+
+-- Create an autocommand defined by callback
 vim.api.nvim_create_autocmd({'BufEnter'}, {
   pattern = {'*.ts', '*.tsx'},
-  command = "echo 'Entering a Typescript or React file'",
+  callback = function(event)
+    print('Iniciando modo meter o loko')
+  end,
 })
 
 --- telescope config
