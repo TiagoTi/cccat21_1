@@ -8,6 +8,7 @@ Plug('preservim/nerdtree')
 Plug('nvim-telescope/telescope.nvim')
 Plug('nvim-lua/plenary.nvim')
 Plug('junegunn/fzf', { ['dir'] = '~/.fzf', ['do'] = './install --all' })
+Plug('L3MON4D3/LuaSnip', {['tag']= 'v2.*', ['do']= 'make install_jsregexp'})
 vim.call('plug#end')
 
 vim.cmd([[
@@ -61,3 +62,9 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find f
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+
+---
+local ls = require("luasnip")
+require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/lua/snippets" })
+vim.keymap.set({ "i" }, "<C-K>", function() ls.expand() end, { silent = true })
+---
