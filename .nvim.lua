@@ -1,5 +1,6 @@
 local vim = vim
 local Plug = vim.fn['plug#']
+vim.api.nvim_command('autocmd!')
 vim.call('plug#begin')
 Plug('neovim/nvim-lspconfig')
 Plug('diepm/vim-rest-console')
