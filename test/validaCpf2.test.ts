@@ -34,3 +34,49 @@ test("Deve testar um cpf válido com final dois zeros", async () => {
   // Then
   expect(isValid).toBe(true);
 });
+
+
+test("Não deve validar null", async () => {
+  // Given
+  const cpf = null;
+
+  // When
+  // @ts-ignore
+  const isInvalid = validateCpf2(cpf);
+
+  // Then
+  expect(isInvalid).not.toBe(true);
+});
+
+test("Não deve validar undefined", async () => {
+  // Given
+  const cpf = undefined;
+
+  // When
+  // @ts-ignore
+  const isInvalid = validateCpf2(cpf);
+
+  // Then
+  expect(isInvalid).not.toBe(true);
+});
+
+
+test("Não deve validar vazio", async () => {
+  // given
+  const cpf = "";
+
+  // when
+  const isInvalid = validateCpf2(cpf);
+
+  // then
+  expect(isInvalid).not.toBe(true);
+});
+
+test("Não deve validar repetido", async () => {
+  // given
+  const cpf = "11111111111";
+  // when
+  const isInvalid = validateCpf2(cpf);
+  // then
+  expect(isInvalid).not.toBe(true);
+});
