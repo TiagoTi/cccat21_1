@@ -1,3 +1,5 @@
+const CLEAR_CPF_REGEX = /[.,\-\s]/g;
+
 export function validateCpf2(str: string): boolean {
   if (str === null) {
     return false;
@@ -5,11 +7,7 @@ export function validateCpf2(str: string): boolean {
 		if (str !== undefined) {
 			if (str.length >= 11 && str.length <=14) {
 				// cleaning cpf
-				str = str
-					.replace('.','')
-					.replace(',','')
-					.replace('-','')
-					.replace(' ','');
+				str = sanitize(str, CLEAR_CPF_REGEX);
 				// tudo igual
 				if (!str.split("").every(c=> c===str[0])) {
 					try {
@@ -45,4 +43,8 @@ export function validateCpf2(str: string): boolean {
 			}else return false;
 		} else return false;
   return false;
+}
+
+const sanitize = (s: string, pattern: RegExp):string => {
+  return s.replace(pattern,'');
 }
