@@ -10,6 +10,7 @@ test('deve criar uma conta', async () => {
     "document": "97456321558",
     "password": "Paww0rdsw"
   }
+
   // then
   const resSignup = await axios.post(`${server}/signup`, inputSignup);
   expect(resSignup.data).toHaveProperty("accountId");
