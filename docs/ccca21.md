@@ -1,0 +1,1 @@
+/home/tiago/Documents/obsidian-valts/segundo-cerebr/projetos/ccca21.md
