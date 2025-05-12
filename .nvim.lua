@@ -8,6 +8,7 @@ Plug('dense-analysis/ale')
 Plug('preservim/nerdtree')
 Plug('nvim-telescope/telescope.nvim')
 Plug('nvim-lua/plenary.nvim')
+Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
 Plug('junegunn/fzf', { ['dir'] = '~/.fzf', ['do'] = './install --all' })
 Plug('L3MON4D3/LuaSnip', {['tag']= 'v2.*', ['do']= 'make install_jsregexp'})
 vim.call('plug#end')
@@ -18,6 +19,7 @@ vim.cmd([[
   set softtabstop=2           " see multiple spaces as tabstops so <BS> does the right thing
   set shiftwidth=2            " width for autoindents
   set cc=120                  " set an 80 column border for good coding style
+  syntax on
 
   tnoremap <Esc><Esc> <C-\><C-n>
 ]])
@@ -69,3 +71,17 @@ local ls = require("luasnip")
 require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/lua/snippets" })
 vim.keymap.set({ "i" }, "<C-K>", function() ls.expand() end, { silent = true })
 ---
+---
+---
+local lspconfig = require('lspconfig')
+lspconfig.tsserver.setup {}
+
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = {
+    "lua", "typescript", "javascript", "json", "html", "css"
+  },
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+}

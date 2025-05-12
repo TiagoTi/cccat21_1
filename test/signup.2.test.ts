@@ -13,7 +13,7 @@ test('deve criar uma conta', async () => {
 
   // then
   const resSignup = await axios.post(`${server}/signup`, inputSignup);
-  expect(resSignup.data).toHaveProperty("accountId");
+  expect(resSignup.data.accountId).toBeDefined();
 
   const resAccount = await axios.get(`${server}/accounts/${resSignup.data.accountId}`)
   expect(resAccount.data).toHaveProperty("accountId");
