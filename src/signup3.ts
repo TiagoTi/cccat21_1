@@ -55,32 +55,32 @@ const invalidEmail = (email: string):boolean => {
 app.post('/signup', async (req: Request, res: Response) => {
   const accountId = crypto.randomUUID();
   const input = req.body;
-  if (invalidName(input.name)) return res.status(422).json({"error": "Invalid Name"})
-  if (invalidEmail(input.email)) return res.status(422).json({"error": "Invalid Email"})
-  if (!validateCpf(input.document)) return res.status(422).json({"error": "Invalid Document"})
-  if (invalidPassword(input.password)) return res.status(422).json({"error": "Invalid Password"})
+  if (invalidName(input.name)) return res.status(422).json({"error": "Invalid name"})
+  if (invalidEmail(input.email)) return res.status(422).json({"error": "Invalid email"})
+  if (!validateCpf(input.document)) return res.status(422).json({"error": "Invalid document"})
+  if (invalidPassword(input.password)) return res.status(422).json({"error": "Invalid password"})
 
-  dbMem[accountId] = {
+  /*dbMem[accountId] = {
     accountId: accountId,
     name: input.name,
     email: input.email,
     document: input.document,
     password: input.password,
   }
+  */
   const {rows} = await db.query(
     "insert into ccca.account (account_id, name, email, document, password) values ($1, $2, $3, $4, $5)",
     [accountId,input.name, input.email, input.document, input.password]
   )
-  res.status(201).json({"accountId": rows[0]})
-  console.log('oi')
+  res.status(201).json({"accountId": accountId})
 });
 
 app.get('/accounts/:accountId', async (req: Request, res: Response) => {
   const accountId = req.params['accountId'];
-  console.log('oi')
-  console.log(`get by accountId: ${accountId}`)
-  const account = dbMem[accountId]
-  console.info(`account found? ${account}`)
-  res.status(200).json(dbMem[accountId])
+  // const account = dbMem[accountId]
+  const [account] = await db.query(
+    "select account_id, name, email, document, password from ccca.account where account_id = $1", [accountId])
+  account['accountId']=accountId;
+  res.status(200).json(account)
 });
 app.listen(3000, ()=>{console.log('running')})

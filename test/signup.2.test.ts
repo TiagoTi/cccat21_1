@@ -40,7 +40,7 @@ test('não deve criar uma conta com nome inválido', async () => {
   // then
   const resSignup = await axios.post(`${server}/signup`, inputSignup);
   expect(resSignup.status).toBe(422);
-  expect(resSignup.data.error).toBe("Invalid Name");
+  expect(resSignup.data.error).toBe("Invalid name");
 });
 
 
@@ -56,7 +56,7 @@ test('não deve criar uma conta com email inválido', async () => {
   // then
   const resSignup = await axios.post(`${server}/signup`, inputSignup);
   expect(resSignup.status).toBe(422);
-  expect(resSignup.data.error).toBe("Invalid Email");
+  expect(resSignup.data.error).toBe("Invalid email");
 });
 
 test('não deve criar uma conta com cpf inválido', async () => {
@@ -71,7 +71,7 @@ test('não deve criar uma conta com cpf inválido', async () => {
   // then
   const resSignup = await axios.post(`${server}/signup`, inputSignup);
   expect(resSignup.status).toBe(422);
-  expect(resSignup.data.error).toBe("Invalid Document");
+  expect(resSignup.data.error).toBe("Invalid document");
 });
 
 test('não deve criar uma conta com senha inválida', async () => {
@@ -86,7 +86,7 @@ test('não deve criar uma conta com senha inválida', async () => {
   // then
   const resSignup = await axios.post(`${server}/signup`, inputSignup);
   expect(resSignup.status).toBe(422);
-  expect(resSignup.data.error).toBe("Invalid Password");
+  expect(resSignup.data.error).toBe("Invalid password");
 });
 
 
