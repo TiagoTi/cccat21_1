@@ -2,9 +2,25 @@ import express, {Request, Response} from "express";
 import crypto from "crypto";
 import {validateCpf} from "./validateCpf";
 
-const app = express();
+const app = express()
+import pgPromise, { IDatabase, IMain } from 'pg-promise';
+
 app.use(express.json());
 
+const pgp: IMain = pgPromise();
+const db: IDatabase<{}> = pgp("postgres://usr_admin_trading:123@192.168.10.3:5432/app_trading_dev");
+
+
+( async ()=> {
+try {
+  const r = await db.query('select 1');
+  console.log(db);
+  console.log(`return: ${r}`)
+}catch(e){
+  console.error(`erro ao contectar ao postgres ${e}`)
+  throw e;
+}
+})();
 interface Account {
   accountId: string
   name: string
@@ -51,7 +67,11 @@ app.post('/signup', async (req: Request, res: Response) => {
     document: input.document,
     password: input.password,
   }
-  res.status(201).json({"accountId": accountId})
+  const {rows} = await db.query(
+    "insert into ccca.account (account_id, name, email, document, password) values ($1, $2, $3, $4, $5)",
+    [accountId,input.name, input.email, input.document, input.password]
+  )
+  res.status(201).json({"accountId": rows[0]})
   console.log('oi')
 });
 

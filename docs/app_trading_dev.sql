@@ -3,7 +3,7 @@
 
 create database app_trading_dev;
 
-CREATE ROLE usr_admin
+CREATE ROLE usr_admin_trading
   WITH LOGIN
   PASSWORD 'Passw0rd!'
   NOSUPERUSER
@@ -20,15 +20,15 @@ CREATE ROLE usr_api
   INHERIT
   VALID UNTIL 'infinity';
 
-GRANT CONNECT ON DATABASE app_trading_dev TO usr_admin;
+GRANT CONNECT ON DATABASE app_trading_dev TO usr_admin_trading;
 GRANT CONNECT ON DATABASE app_trading_dev TO usr_api;
 
-ALTER DATABASE app_trading_dev OWNER TO usr_admin;
+ALTER DATABASE app_trading_dev OWNER TO usr_admin_trading;
 
 \c app_trading_dev;
 
-GRANT CREATE ON SCHEMA public TO usr_admin;
-ALTER SCHEMA public OWNER TO usr_admin;
+GRANT CREATE ON SCHEMA public TO usr_admin_trading;
+ALTER SCHEMA public OWNER TO usr_admin_trading;
 
 GRANT CREATE ON SCHEMA public TO usr_api;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO usr_api;
@@ -39,7 +39,7 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE O
 -- psql -W -h 192.168.10.3 app_trading_dev usr_api
 
 -- conectar como a administrador 
--- psql -W -h 192.168.10.3 app_trading_dev usr_admin
+-- psql -W -h 192.168.10.3 app_trading_dev usr_admin_trading
 
 
 -- psql -W -h 192.168.10.3 pizzaria_db_dev usr_api
