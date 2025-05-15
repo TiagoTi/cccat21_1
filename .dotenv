@@ -1,4 +1,4 @@
 function dev () {
 #  yarn run dev
-  yarn nodemon src/signup3.ts
+  yarn nodemon src/main.ts
 }

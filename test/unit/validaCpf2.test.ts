@@ -1,4 +1,4 @@
-import { validateCpf2 } from "../src/validateCpf2";
+import { validateCpf2 } from "../../src/validateCpf2";
 
 test("Deve testar um cpf válido", async () => {
   // Given

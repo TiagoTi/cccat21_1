@@ -74,7 +74,7 @@ vim.keymap.set({ "i" }, "<C-K>", function() ls.expand() end, { silent = true })
 ---
 ---
 local lspconfig = require('lspconfig')
-lspconfig.tsserver.setup {}
+lspconfig.ts_ls.setup {}
 
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
