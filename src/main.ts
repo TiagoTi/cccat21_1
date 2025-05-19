@@ -2,6 +2,7 @@ import express, {Request, Response} from "express";
 import crypto from "crypto";
 import {validateCpf} from "./validateCpf";
 import {invalidPassword} from "./invalidPassword";
+import {invalidName} from "./invalidName";
 
 const app = express()
 import pgPromise, { IDatabase, IMain } from 'pg-promise';
@@ -36,10 +37,6 @@ interface AccountDb<Account> {
 
 const dbMem: AccountDb<Account> = {};
 
-const invalidName = (name: string):boolean => {
-  const regex = /^\w+\s+\w+.*$/;
-  return !regex.test(name);
-}
 
 const invalidEmail = (email: string):boolean => {
   const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
