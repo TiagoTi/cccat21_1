@@ -2,3 +2,5 @@ function dev () {
 #  yarn run dev
   yarn nodemon src/main.ts
 }
+
+export PATH=$(pwd)/node_modules/.bin:$PATH

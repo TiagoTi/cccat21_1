@@ -1,6 +1,7 @@
 import express, {Request, Response} from "express";
 import crypto from "crypto";
 import {validateCpf} from "./validateCpf";
+import {invalidPassword} from "./invalidPassword";
 
 const app = express()
 import pgPromise, { IDatabase, IMain } from 'pg-promise';
@@ -35,13 +36,6 @@ interface AccountDb<Account> {
 
 const dbMem: AccountDb<Account> = {};
 
-function invalidPassword (password: string) {
-    if (password.length < 8) return true;
-    if (!password.match(/\d+/)) return true;
-    if (!password.match(/[a-z]+/)) return true;
-    if (!password.match(/[A-Z]+/)) return true;
-    return false;
-}
 const invalidName = (name: string):boolean => {
   const regex = /^\w+\s+\w+.*$/;
   return !regex.test(name);
