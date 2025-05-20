@@ -70,8 +70,39 @@ app.get('/accounts/:accountId', async (req: Request, res: Response) => {
   const accountId = req.params['accountId'];
   // const account = dbMem[accountId]
   const [account] = await db.query(
-    "select account_id, name, email, document, password from ccca.account where account_id = $1", [accountId])
+    "select account_id, name, email, document, password from ccca.account where account_id = $1",
+      [accountId]
+  );
+
   account['accountId']=accountId;
+  const assetsRows = await db.query(
+    'select * from ccca.account_asset where account_id = $1',
+      [accountId]
+  );
+  const assets:any[] = []
+  for (const row of assetsRows){
+    assets.push({
+      assetId: row.asset_id,
+      quantity: parseFloat(row.quantity)
+    })
+  }
+  account['assets'] = assets
+
   res.status(200).json(account)
 });
+
+app.post('/deposit', async (req: Request, res: Response) => {
+  const accountId = crypto.randomUUID();
+  const input = req.body;
+  try {
+  const {rows} = await db.query(
+    "insert into ccca.account_asset(account_id, asset_id, quantity) values ($1, $2, $3)",
+    [input.accountId, input.assetId, input.quantity]
+  )
+  res.status(201).end();
+  }catch(e){
+    console.error(`fail to insert into account_asset: ${e}`);
+    res.status(500).end();
+  }
+})
 app.listen(3000, ()=>{console.log('running')})
